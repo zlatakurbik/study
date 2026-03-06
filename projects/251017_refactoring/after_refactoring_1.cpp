@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-void generate_output_and_average(float arr[], const int size) {
+void generate_output_and_average(int arr[], const int size) {
     double average = 0;
     for (int i = 0; i < size; i++) {
         arr[i] = rand() % size; 

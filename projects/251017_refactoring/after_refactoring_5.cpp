@@ -15,7 +15,7 @@ int main() {
 	int week_day = (
 		day 
 		+ (13 * month -1) / 5 
-		+ y / 4 
+		+ year / 4 
 		+ centure / 4 
 		- 2 * centure 
 		+ 777
@@ -23,25 +23,25 @@ int main() {
 	
 	std::cout << "День недели это ";
 	switch(week_day){
-		case == 0 :
+		case 0 :
 			std::cout << "Воскресенье" << std::endl;
 			break;
-		case == 1 :
+		case 1 :
 			std::cout << "Понедельник" << std::endl;
 			break;
-		case == 2 :
+		case 2 :
 			std::cout << "Вторник" << std::endl;
 			break;
-		case == 3 :
+		case 3 :
 			std::cout << "Среда" << std::endl;
 			break;
-		case == 4 :
+		case 4 :
 			std::cout << "Четверг" << std::endl;
 			break;
-		case == 5 :
+		case 5 :
 			std::cout << "Пятница" << std::endl;
 			break;
-		case == 6 :
+		case 6 :
 			std::cout << "Суббота" << std::endl;
 			break;
 		default :
