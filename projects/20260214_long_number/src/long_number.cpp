@@ -1,4 +1,6 @@
-#include "long_number2.hpp"
+#include "long_number.hpp"
+#include <cstring>
+
 
 using biv::LongNumber;
 		
@@ -24,7 +26,7 @@ LongNumber::LongNumber(const char* const str) {
     }
     
     for (int i = 0; i < length / 2; ++i) {
-        swap(numbers[i], numbers[length - i - 1]);
+        std::swap(numbers[i], numbers[length - i - 1]);
     }
 }
 
@@ -74,7 +76,7 @@ LongNumber& LongNumber::operator = (const char* const str) {
         }
 
         for (int i = 0; i < length / 2; ++i) {
-            swap(numbers[i], numbers[length - i - 1]);
+            std::swap(numbers[i], numbers[length - i - 1]);
         }
 
         return *this;
@@ -82,13 +84,13 @@ LongNumber& LongNumber::operator = (const char* const str) {
 
 //KP
 LongNumber& LongNumber::operator = (const LongNumber& x ){
-            delete[] numbers;
-            length = x.length;
-            sign = x.sign;
-            numbers = new int[length];
-            for (int i = 0; i < length; i++) {
-                numbers[i] = x.numbers[i];
-            }
+	delete[] numbers;
+	length = x.length;
+	sign = x.sign;
+	numbers = new int[length];
+	for (int i = 0; i < length; i++) {
+		numbers[i] = x.numbers[i];
+	}
     return *this;
 }
 
@@ -151,7 +153,7 @@ LongNumber LongNumber::operator + (const LongNumber& x) const {
     LongNumber result;
 
     if (sign == x.sign) {
-        result.length = max(length, x.length) + 1;
+        result.length = std::max(length, x.length) + 1;
         result.numbers = new int[result.length];
         int carry = 0;
         for (int i = 0; i < result.length; ++i) {
@@ -267,10 +269,10 @@ LongNumber LongNumber::operator/(const LongNumber& x) const {
 
 
     LongNumber current("0");
-    LongNumber ten("10");
     for (int i = dividend.length - 1; i >= 0; --i) {
-
-        current = (current * ten) + LongNumber(to_string(dividend.numbers[i]).c_str());
+		// Спросить у Варвары, почему эта конструкция не работает и что надо 
+		// сделать, чтобы заработала.
+        current = (current * 10) + dividend.numbers[i]; 
         int digit = 0;
         while (current >= divisor) {
             current = (current - divisor);
@@ -286,6 +288,22 @@ LongNumber LongNumber::operator/(const LongNumber& x) const {
     return result;
 
 }
+Напишите ответ здесь
+ну насколько я вообще понимаю что происходит. мы же в самом начале ставим разные кострукторы
+и вот у нас у нас сверху должен быть консруктор что-то типа лонгНамбер(конст*что-то там и тд) и благодаря нему 
+Я ДУМАЮ что ошибка не выскакивает
+
+компилируется, потому что происхолдит перезагрузка оператора. не удаляется, потому что "10" - это
+константная штука(я не помню правильно название), а в дальнейшем будет ЛонгНамбэр работать до того момента,
+пока нам нужно это для вычисления.
+
+а вы думаете как нам это объяснить или у нас настолько тупые ответы
+
+Наташа ближе к правильному ответу.
+
+Я хочу придумать ответ, в котором от расстановки запятых будет зависеть, кто прав.
+
+
 
 LongNumber LongNumber::operator % (const LongNumber& x) const {
     LongNumber copy = *this;
@@ -322,7 +340,7 @@ int LongNumber::get_digits_number() const noexcept {
 
 int LongNumber::get_rank_number(int rank) const {
     if (rank < 1 || rank > length) { //Whether the rank is within the permissible limits 
-        throw out_of_range("Rank is out of range");
+        throw std::out_of_range("Rank is out of range");
     }
     return numbers[length - rank]; //Transfer of rank to index
 }
@@ -343,7 +361,7 @@ int LongNumber::get_length(const char* const str) const noexcept {
 // FRIENDLY
 // ----------------------------------------------------------
 namespace biv {
-	ostream& operator << (ostream &os, const LongNumber& x) {
+	std::ostream& operator << (std::ostream &os, const LongNumber& x) {
 		if (x.sign == -1) {
 			os << '-';
 		}

@@ -1,11 +1,9 @@
 build_*/
 lib/
-test*
-*.sh
-*.DS_Store
+*.user
+*.filters
+
 *.exe
 *.ii
 *.s
 *.o
-/build_ninja
-build_ninja/
